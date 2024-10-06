@@ -13,19 +13,21 @@ class ApiResponseClass
         self::throw($e, $message);
     }
 
-    public static function throw($e, $message ="Something went wrong! Process not completed"){
+    public static function throw($e, $message ="Something went wrong! Process not completed", $code = 500){
         Log::info($e);
-        throw new HttpResponseException(response()->json(["message"=> $message], 500));
+        throw new HttpResponseException(response()->json(["message"=> $message], $code));
     }
 
-    public static function sendResponse($result , $message ,$code=200){
+    public static function sendResponse($result, $message, $code = 200){
         $response=[
             'success' => true,
         ];
         if(!empty($message)){
             $response['message'] = $message;
         }
-        $response['data'] = $result;
+        if(!empty($result)){
+            $response['data'] = $result;
+        }
         return response()->json($response, $code);
     }
 }

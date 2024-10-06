@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateDepartemenRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class UpdateDepartemenRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,15 @@ class UpdateDepartemenRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nama_departemen' => 'required|max:100',
         ];
+    }
+
+    public function failedValidation(Validator $validator) {
+        throw new HttpResponseException(response()->json([
+            'success' => false,
+            'message' => 'Validation errors occurred',
+            'data' => $validator->errors(),
+        ], 400));
     }
 }
