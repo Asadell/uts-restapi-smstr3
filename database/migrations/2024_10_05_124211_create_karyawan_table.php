@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('karyawan', function (Blueprint $table) {
             $table->id();
             $table->string('nama_lengkap', 100);
-            $table->string('email', 100);
-            $table->string('nomor_telepon', 15);
+            $table->string('email', 100)->unique();
+            $table->string('password');
+            $table->string('nomor_telepon', 15)->unique();
             $table->date('tanggal_lahir');
             $table->text('alamat');
             $table->date('tanggal_masuk');
@@ -26,6 +27,7 @@ return new class extends Migration
                 table: 'jabatan', indexName: 'karyawan_jabatan_id'
             )->onDelete('cascade');
             $table->enum('status', ['aktif', 'nonaktif']);
+            $table->rememberToken();
             $table->timestamps();
         });
     }
