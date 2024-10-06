@@ -24,6 +24,15 @@ class StoreJabatanRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'nama_jabatan' => 'required|max:100',
         ];
+    }
+
+    public function failedValidation(Validator $validator) {
+        throw new HttpResponseException(response()->json([
+            'success' => false,
+            'message' => 'Validation errors occurred',
+            'data' => $validator->errors(),
+        ], 400));
     }
 }

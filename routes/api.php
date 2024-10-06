@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DepartemenController;
+use App\Http\Controllers\JabatanController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -8,8 +9,5 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
-// Route::get('/departemen', function (Request $request) {
-//     return $request->user();
-// });
-
 Route::apiResource('departemen', DepartemenController::class);
+Route::apiResource('jabatan', JabatanController::class,);
