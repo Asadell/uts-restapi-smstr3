@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\ApiResponseClass;
 use App\Models\Departemen;
 use App\Http\Requests\StoreDepartemenRequest;
 use App\Http\Requests\UpdateDepartemenRequest;
+use App\Http\Resources\DepartemenResource;
 
 class DepartemenController extends Controller
 {
@@ -23,7 +25,7 @@ class DepartemenController extends Controller
     {
         $departemen = Departemen::query()->create($request->all());
 
-        return ['data' => $departemen];
+        return ApiResponseClass::sendResponse(new DepartemenResource($departemen), 'Departemen Create Successful', 201);
     }
 
     /**
