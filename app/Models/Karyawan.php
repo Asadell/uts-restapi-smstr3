@@ -53,7 +53,7 @@ class Karyawan extends Authenticatable
     //     return $this->hasMany(Absensi::class);
     // }
 
-    // public function gaji() {
-    //     return $this->hasMany(Gaji::class);
-    // }
+    public function gaji() {
+        return $this->hasMany(Gaji::class);
+    }
 }
