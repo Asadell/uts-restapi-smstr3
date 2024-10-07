@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'api'),
-        'passwords' => env('AUTH_PASSWORD_BROKER', 'karyawan'),
+        'guard' => env('AUTH_GUARD', 'web'),
+        'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
     ],
 
     /*
@@ -36,18 +36,17 @@ return [
     */
 
     'guards' => [
-        'karyawan' => [
+        'web' => [
             'driver' => 'session',
-            'provider' => 'karyawan'
+            'provider' => 'users',
         ],
         'api' => [
             'driver' => 'sanctum',
-            'provider' => 'karyawan',
-            'hash' => false
+            'provider' => 'karyawans',
         ],
-        // 'web' => [
+        // 'karyawan' => [
         //     'driver' => 'session',
-        //     'provider' => 'users',
+        //     'provider' => 'karyawans'
         // ],
     ],
 
@@ -69,19 +68,19 @@ return [
     */
 
     'providers' => [
-        // 'karyawan' => [
-        //     'driver' => 'database',
-        //     'table' => 'karyawan',
+        'users' => [
+            'driver' => 'database',
+            'table' => 'karyawan', // ASDFASFDSAFSA
+        ],
+        // 'karyawans' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Models\Karyawan::class,
         // ],
-        'karyawan' => [
-            'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\Karyawan::class),
+        'karyawans' => [
+            'driver' => 'database',
+            'table' => 'karyawan',
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*
@@ -104,16 +103,16 @@ return [
     */
 
     'passwords' => [
-        'karyawan' => [
-            'provider' => 'karyawan',
+        'users' => [
+            'provider' => 'users',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
             'expire' => 60,
             'throttle' => 60,
         ],
-        // 'karyawan' => [
-        //     'driver' => 'eloquent',
-        //     'model' => App\Models\Karyawan::class,
-        // ]
+        'karyawan' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Karyawan::class,
+        ]
     ],
 
     /*

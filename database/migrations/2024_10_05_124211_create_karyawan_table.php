@@ -1,5 +1,6 @@
 <?php
 
+use App\Enum\KaryawanStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -26,7 +27,7 @@ return new class extends Migration
             $table->foreignId('jabatan_id')->constrained(
                 table: 'jabatan', indexName: 'karyawan_jabatan_id'
             )->onDelete('cascade');
-            $table->enum('status', ['aktif', 'nonaktif']);
+            $table->enum('status', ['aktif', 'nonaktif'])->default(KaryawanStatus::NONAKTIF->value);
             $table->rememberToken()->nullable();
             $table->timestamps();
         });
