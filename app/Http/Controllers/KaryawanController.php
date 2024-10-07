@@ -30,13 +30,26 @@ class KaryawanController extends Controller
      */
     public function store(StoreKaryawanRequest $request)
     {
+        // $input = $request->all();
+        // $input['password'] = bcrypt($input['password']);
+
+        // $karyawan = Karyawan::query()->create($input);
+        // $karyawan['token'] = $karyawan->createToken($karyawan->nama_lengkap)->plainTextToken;
+
+        // return [
+        //     'data' => $karyawan,
+        // ];
+
         try {
-            $karyawan = Karyawan::query()->create($request->all());
-            // $karyawan->load(['departemen', 'jabatan']); // kalo mau ambil data full 1 tabel
-    
+            $input = $request->all();
+            $input['password'] = bcrypt($input['password']);
+
+            $karyawan = Karyawan::query()->create($input);
+            $karyawan['access_token'] = $karyawan->createToken($karyawan->email)->plainTextToken;
+
             return ApiResponseClass::sendResponse(new KaryawanResource($karyawan), 'Karyawan Create Successful', 201);
         } catch (\Exception $e) {
-            ApiResponseClass::throw($e, 'Failed to store Karyawan!');
+            ApiResponseClass::throw($e, 'Failed to Register Karyawan!');
         }
     }
 

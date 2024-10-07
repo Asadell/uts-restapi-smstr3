@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'web'),
-        'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
+        'guard' => env('AUTH_GUARD', 'api'),
+        'passwords' => env('AUTH_PASSWORD_BROKER', 'karyawan'),
     ],
 
     /*
@@ -36,10 +36,19 @@ return [
     */
 
     'guards' => [
-        'web' => [
+        'karyawan' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'karyawan'
         ],
+        'api' => [
+            'driver' => 'sanctum',
+            'provider' => 'karyawan',
+            'hash' => false
+        ],
+        // 'web' => [
+        //     'driver' => 'session',
+        //     'provider' => 'users',
+        // ],
     ],
 
     /*
@@ -60,9 +69,13 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        // 'karyawan' => [
+        //     'driver' => 'database',
+        //     'table' => 'karyawan',
+        // ],
+        'karyawan' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model' => env('AUTH_MODEL', App\Models\Karyawan::class),
         ],
 
         // 'users' => [
@@ -91,12 +104,16 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'karyawan' => [
+            'provider' => 'karyawan',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
             'expire' => 60,
             'throttle' => 60,
         ],
+        // 'karyawan' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Models\Karyawan::class,
+        // ]
     ],
 
     /*

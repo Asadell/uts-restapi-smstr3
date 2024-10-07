@@ -27,6 +27,7 @@ class KaryawanResource extends JsonResource
             'departemen' => $this->departemen->nama_departemen, 
             'jabatan' => $this->jabatan->nama_jabatan, 
             'status' => $this->status,
+            'access_token' => $this->access_token,
         ];
     }
 }
