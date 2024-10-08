@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateAbsensiRequest;
 use App\Http\Resources\AbsensiResource;
 use App\Service\AbsensiService;
 use GuzzleHttp\Middleware;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 
@@ -68,6 +69,8 @@ class AbsensiController extends Controller
             $absensi = Absensi::findOrFail($id);
     
             return ApiResponseClass::sendResponse(new AbsensiResource($absensi), '', 200);
+        } catch (AuthorizationException $e) {
+            ApiResponseClass::throw($e, $e->getMessage(), 403);
         } catch (ModelNotFoundException $e) {
             ApiResponseClass::throw($e, 'Absensi not found.', 404);
         } catch (\Exception $e) {
@@ -81,10 +84,15 @@ class AbsensiController extends Controller
     public function update(UpdateAbsensiRequest $request, $id)
     {
         try {
+            $this->absensiService->checkUsersOwnAbsensi($id);
+            $this->absensiService->isOnLeaveOrAbsent($id);
+
             $absensi = Absensi::findOrFail($id);
             $absensi->update($request->validated());
 
             return ApiResponseClass::sendResponse(new AbsensiResource($absensi), 'Absensi Update Successful', 200);
+        } catch (AuthorizationException $e) {
+            ApiResponseClass::throw($e, $e->getMessage(), 403);
         } catch (ValidationException $e) {
             ApiResponseClass::throw($e, $e->getMessage(), 400);
         } catch (ModelNotFoundException $e) {
