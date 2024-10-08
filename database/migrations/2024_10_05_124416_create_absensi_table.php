@@ -17,8 +17,8 @@ return new class extends Migration
                     table: 'karyawan', indexName: 'absensi_karyawan_id'
                 )->onDelete('cascade');
             $table->date('tanggal');
-            $table->time('waktu_masuk');
-            $table->time('waktu_keluar');
+            $table->time('waktu_masuk')->nullable();
+            $table->time('waktu_keluar')->nullable();
             $table->enum('status_absensi', ['hadir', 'izin', 'sakit', 'alpha']);
             $table->timestamps();
         });
