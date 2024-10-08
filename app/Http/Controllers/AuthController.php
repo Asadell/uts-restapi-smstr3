@@ -16,7 +16,7 @@ class AuthController extends Controller
         // die(Auth::guard('api')->attempt($credentials));
         if (!Auth::attempt($credentials)) {
         // if (!auth()->guard('api')->attempt($credentials)) {
-            die('$userr');
+            // die('$userr');
             return ApiResponseClass::throw('Authenticatication failed', 'Incorrect password', 401);
         }
 
